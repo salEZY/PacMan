@@ -4,11 +4,14 @@ let ghost = false;
 let ghost2 = false;
 let countblink = 10;
 let keyclick = {};
+let gamePaused = false;
 let btn = document.querySelector('.start');
 let intro = document.querySelector('.intro');
 let retry = document.querySelector('#retry');
 let canvas = document.querySelector('#myCanvas');
+let paused = document.querySelector('#paused');
 let ctx = canvas.getContext('2d');
+let footer = document.querySelector('.mainFoot');
 
 let mainImage;
 let audio;
@@ -72,20 +75,21 @@ function move(keyclick) {
     player.x -= player.speed;
     player.pacDir = 64;
   }
-
   if (38 in keyclick) {
     player.y -= player.speed;
     player.pacDir = 96;
   }
-
   if (39 in keyclick) {
     player.x += player.speed;
     player.pacDir = 0;
   }
-
   if (40 in keyclick) {
     player.y += player.speed;
     player.pacDir = 32;
+  }
+
+   if (13 in keyclick) {
+    pauseGame();
   }
 
   if (player.x >= (canvas.width - 48)) {
@@ -131,9 +135,28 @@ function startGame() {
 
 function playAgain() {
   retry.style.display = "none";
+  footer.style.display = "block";
   player.speed = 10;
   score = 0;
   ghostScore = 0;
+}
+
+  function pauseGame () {
+  if (!gamePaused) {
+      player.speed = 0;
+      enemy.speed = 0;
+      enemy2.speed = 0;
+      canvas.style.opacity = "0.8";
+      paused.style.display = "block";
+      gamePaused = true;
+    } else if (gamePaused) {
+      player.speed = 10;
+      enemy.speed = myNum(5);
+      enemy2.speed = myNum(5);
+      canvas.style.opacity = "1";
+      paused.style.display = "none";
+      gamePaused = false;
+    }
 }
 
 function checkReady() {
@@ -176,7 +199,7 @@ function render() {
 
   if (enemy.moving < 0) {
   enemy.moving = (myNum(20) * 3)+10 + myNum(2);
-  enemy.speed = myNum(5);
+  // enemy.speed = myNum(5);
   enemy.dirx = 0;
   enemy.diry = 0;
   if (pill.ghosteat) {
@@ -216,7 +239,7 @@ function render() {
 
   if (enemy2.moving < 0) {
   enemy2.moving = (myNum(20) * 3)+10 + myNum(2);
-  enemy2.speed = myNum(5);
+  // enemy2.speed = myNum(5);
   enemy2.dirx = 0;
   enemy2.diry = 0;
   if (pill.ghosteat) {
@@ -253,7 +276,6 @@ function render() {
   if (enemy2.y < 0) {
     enemy2.y = canvas.height - 32;
   }
-
   //Collision detection ghost
 
   if (player.x <= (enemy.x+26) && enemy.x <=(player.x+26) && player.y <= (enemy.y+26) && enemy.y <=(player.y+32) ) {
@@ -339,6 +361,7 @@ function render() {
     countblink = 10;
   }
 
+
   if (score == 5) {
     ctx.font = "100px Verdana";
     ctx.fillStyle = "green";
@@ -349,10 +372,11 @@ function render() {
     enemy2.y = 500;
     player.speed = 0;
     retry.style.display = "block";
+    footer.style.display = "none";
   }
   if (ghostScore == 5) {
     ctx.font = "100px Verdana";
-    ctx.fillStyle = "RED";
+    ctx.fillStyle = "red";
     ctx.fillText(`YOU LOSE`, 150, 350);
     enemy.x = 750;
     enemy.y = 100;
@@ -360,6 +384,7 @@ function render() {
     enemy2.y = 500;
     player.speed = 0;
     retry.style.display = "block";
+    footer.style.display = "none"; 
   }
 
   ctx.font = "20px Verdana";

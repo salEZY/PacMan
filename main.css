@@ -17,6 +17,7 @@ body{
   align-items: center;
   margin-top: 30px;
   margin-bottom: 20px;
+  position: relative;
 }
 .intro{
   width: 800px;
@@ -26,6 +27,13 @@ body{
   padding: 20px;
   margin: 10px;
   outline: 10px double yellow;
+}
+.intro ul{
+  list-style: none;
+}
+.keys{
+  width: 70px;
+  height: 70px;
 }
 .start{
   width: 80px;
@@ -45,6 +53,11 @@ body{
   color: black;
   display: none;
   outline: 10px double yellow;
+}
+#paused{
+  color: white;
+  position: absolute;
+  display: none;
 }
 .playAgain{
   display: flex;
@@ -116,4 +129,21 @@ body{
 		to {
 				-webkit-transform: rotate(180deg);
 		}
+}
+
+@media screen and (max-height: 777px) {
+  .mainFoot{
+    height: 70px;
+  }
+
+  .social span {
+    font-size: 15px;
+    margin-top: 30px;
+    margin-right: 500px;
+  }
+  .social a {
+    width: 30px;
+    height: 30px;
+    margin-top: 25px;
+  }
 }
