@@ -8,6 +8,7 @@ let gamePaused = false;
 let btn = document.querySelector('.start');
 let intro = document.querySelector('.intro');
 let retry = document.querySelector('#retry');
+let quitBtn = document.querySelector('#quit');
 let canvas = document.querySelector('#myCanvas');
 let paused = document.querySelector('#paused');
 let ctx = canvas.getContext('2d');
@@ -20,6 +21,7 @@ let lose;
 
 btn.addEventListener('click', startGame);
 retry.addEventListener('click', playAgain);
+quit.addEventListener('click', quitGame);
 
 document.addEventListener('keydown', function(event){
   keyclick[event.keyCode] = true;
@@ -36,7 +38,7 @@ let player = {
   pacMouth: 320,
   pacDir: 0,
   pSize: 32,
-  speed: 10
+  speed: 11
 }
 
 let enemy = {
@@ -115,6 +117,7 @@ function startGame() {
   intro.style.display = "none";
   canvas.style.display = "block";
   retry.style.display = "none";
+  quit.style.display = "none";
   mainImage = new Image();
   mainImage.ready = false;
   mainImage.onload = checkReady;
@@ -122,7 +125,7 @@ function startGame() {
 
   audio = new Audio();
   audio.src = "img/oforia.mp3";
-  audio.volume = 0.2;
+  audio.volume = 0.1;
   audio.loop = 1;
   audio.play();
   win = new Audio();
@@ -135,8 +138,9 @@ function startGame() {
 
 function playAgain() {
   retry.style.display = "none";
+  quit.style.display = "none";
   footer.style.display = "block";
-  player.speed = 10;
+  player.speed = 11;
   score = 0;
   ghostScore = 0;
 }
@@ -151,12 +155,23 @@ function playAgain() {
       gamePaused = true;
     } else if (gamePaused) {
       player.speed = 10;
-      enemy.speed = myNum(5);
-      enemy2.speed = myNum(5);
+      enemy.speed = myNum(5)-1;
+      enemy2.speed = myNum(5)-1;
       canvas.style.opacity = "1";
       paused.style.display = "none";
       gamePaused = false;
     }
+}
+
+function quitGame () {
+  audio.pause();
+  mainImage.src = "";
+  intro.style.display = "block";
+  canvas.style.display = "none";
+  retry.style.display = "none";
+  quit.style.display = "none";
+  score = 0;
+  ghostScore = 0;
 }
 
 function checkReady() {
@@ -372,6 +387,7 @@ function render() {
     enemy2.y = 500;
     player.speed = 0;
     retry.style.display = "block";
+    quit.style.display = "block";
     footer.style.display = "none";
   }
   if (ghostScore == 5) {
@@ -384,6 +400,7 @@ function render() {
     enemy2.y = 500;
     player.speed = 0;
     retry.style.display = "block";
+    quit.style.display = "block";
     footer.style.display = "none"; 
   }
 
