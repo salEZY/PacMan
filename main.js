@@ -118,6 +118,7 @@ function startGame() {
   canvas.style.display = "block";
   retry.style.display = "none";
   quit.style.display = "none";
+  footer.style.display = "none";
   mainImage = new Image();
   mainImage.ready = false;
   mainImage.onload = checkReady;
@@ -140,6 +141,7 @@ function playAgain() {
   retry.style.display = "none";
   quit.style.display = "none";
   footer.style.display = "block";
+  footer.style.display = "none";
   player.speed = 11;
   score = 0;
   ghostScore = 0;
