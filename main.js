@@ -140,7 +140,6 @@ function startGame() {
 function playAgain() {
   retry.style.display = "none";
   quit.style.display = "none";
-  footer.style.display = "block";
   footer.style.display = "none";
   player.speed = 11;
   score = 0;
@@ -169,6 +168,7 @@ function quitGame () {
   audio.pause();
   mainImage.src = "";
   intro.style.display = "block";
+  footer.style.display = "block";
   canvas.style.display = "none";
   retry.style.display = "none";
   quit.style.display = "none";
